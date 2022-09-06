@@ -3,14 +3,24 @@
 Created on Mon Mar 12 10:32:39 2018
 
 @author: zhenlinz
+
+updated by alliek in september 2022
+
+note from alliek: ask Shira or Gemma for the NUTVIZ password! she will share it in last pass, along with the
+server and the username. if password doesn't work, check if you need to change the server (currently
+toyon-dev.sfei.org) or the username (currently nutviz_ro) specified in AccessPGSQL function below...
+
+another note from alliek: i can't get this to work on richmond or chicago, so i'm running it on my laptop for the 
+time being, may try to fix later
+
 """
 
-from getpass import getpass
+
 import psycopg2
 import pandas as pd
 import sys
 
-def AccessPGSQL(text):        
+def AccessPGSQL(nutviz_password,text):        
     
     #    with open('postgreConfig.json') as f:
     #        conf = json.load(f)
@@ -18,7 +28,6 @@ def AccessPGSQL(text):
     # conn_str = "host={} dbname={} user={} password={}".format(\
     #                   "redbud_dev.sfei.org","nutviz","nutviz_ro","crispywolf")
 
-    nutviz_password = getpass(prompt='Enter password for NUTVIZ database...')
     conn_str = "host={} dbname={} user={} password={}".format(\
                       "toyon-dev.sfei.org","nutviz","nutviz_ro",nutviz_password)
     
@@ -38,7 +47,7 @@ def AccessPGSQL(text):
     return df
 
 
-def GetParameters(*param):
+def GetParameters(nutviz_password,*param):
     text = """
             SELECT 
                 parametercode, 
@@ -64,11 +73,11 @@ def GetParameters(*param):
     elif len(textadd)>1:
         text = text+textadd
             
-    df = AccessPGSQL(text)
+    df = AccessPGSQL(nutviz_password,text)
     
     return df
         
-def GetStations(*stationname):
+def GetStations(nutviz_password,*stationname):
     text = """
             SELECT *            
             FROM
@@ -90,12 +99,12 @@ def GetStations(*stationname):
     elif len(textadd)>1:
         text = text+textadd
             
-    df = AccessPGSQL(text)
+    df = AccessPGSQL(nutviz_password,text)
     
     return df
 
 
-def GetAnalyte(parametercode,start_date,end_date,*stationcode):  
+def GetAnalyte(nutviz_password,parametercode,start_date,end_date,*stationcode):  
     """
     parametercode could be either one text code or a list of the codes. 
     """
@@ -122,11 +131,11 @@ def GetAnalyte(parametercode,start_date,end_date,*stationcode):
                     AND sampleeventdatetime>'""" + start_date +"""' :: date
             ORDER BY sampleeventdatetime """ 
     
-    df = AccessPGSQL(text)
+    df = AccessPGSQL(nutviz_password,text)
     
     return df
 
-def GetStation(stationcode,start_date,end_date):  
+def GetStation(nutviz_password,stationcode,start_date,end_date):  
     """
     stationcode could be either one text code or a list of the codes. 
     """
@@ -152,12 +161,12 @@ def GetStation(stationcode,start_date,end_date):
                     AND sampleeventdatetime>'""" + start_date +"""' :: date
             ORDER BY sampleeventdatetime """ 
     
-    df = AccessPGSQL(text)
+    df = AccessPGSQL(nutviz_password,text)
     
     return df    
 
 
-def GetAnalyteStation(stationcode,parametercode,start_date,end_date):  
+def GetAnalyteStation(nutviz_password,stationcode,parametercode,start_date,end_date):  
     """
     stationcode could be either one text code or a list of the codes. 
     """
@@ -190,7 +199,7 @@ def GetAnalyteStation(stationcode,parametercode,start_date,end_date):
                     AND sampleeventdatetime>'""" + start_date +"""' :: date
             ORDER BY sampleeventdatetime """ 
     
-    df = AccessPGSQL(text)
+    df = AccessPGSQL(nutviz_password,text)
     
     return df    
         
