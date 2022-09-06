@@ -5,6 +5,7 @@ Created on Mon Mar 12 10:32:39 2018
 @author: zhenlinz
 """
 
+from getpass import getpass
 import psycopg2
 import pandas as pd
 import sys
@@ -17,7 +18,7 @@ def AccessPGSQL(text):
     # conn_str = "host={} dbname={} user={} password={}".format(\
     #                   "redbud_dev.sfei.org","nutviz","nutviz_ro","crispywolf")
 
-    nutviz_password = input('Enter password for NUTVIZ database...')
+    nutviz_password = getpass(prompt='Enter password for NUTVIZ database...')
     conn_str = "host={} dbname={} user={} password={}".format(\
                       "toyon-dev.sfei.org","nutviz","nutviz_ro",nutviz_password)
     
