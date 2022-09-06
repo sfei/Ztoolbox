@@ -1,0 +1,8 @@
+{
+  "user":"nutviz_ro",
+  "schema": "nutviz",
+  "host": "redbud_prd.sfei.org",
+  "port": "5432",
+  "database": "nutviz",
+  "passw": "crispywolf"
+ }
