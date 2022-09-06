@@ -16,8 +16,10 @@ def AccessPGSQL(text):
             
     # conn_str = "host={} dbname={} user={} password={}".format(\
     #                   "redbud_dev.sfei.org","nutviz","nutviz_ro","crispywolf")
+
+    nutviz_password = input('Enter password for NUTVIZ database...')
     conn_str = "host={} dbname={} user={} password={}".format(\
-                      "toyon-dev.sfei.org","nutviz","webuser_ro","Dmbrbnw2")
+                      "toyon-dev.sfei.org","nutviz","nutviz_ro",nutviz_password)
     
     # edited by SW in 2020 to have new hostname, password, etc 
 
